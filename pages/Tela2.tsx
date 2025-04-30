@@ -78,7 +78,7 @@ export default function Tela2() {
       <StatusBar barStyle="dark-content" translucent={true} backgroundColor="#F1F1F1" />
       <Text style={ESTILOS.header}>Plano de Estudo</Text>
       <View style={ESTILOS.form}>
-        <Text style={ESTILOS.label}>Insira os ingredientes abaixo:</Text>
+        <Text style={ESTILOS.label}>Insira os tópicos abaixo:</Text>
         <TextInput
           placeholder="Idioma"
           style={ESTILOS.input}

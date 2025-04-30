@@ -15,7 +15,7 @@ const model = genAI.getGenerativeModel({
 
 
 const generationConfig = {
-  temperature: 1,
+  temperature: 0.5,
   topP: 0.95,
   topK: 64,
   maxOutputTokens: 500,
@@ -29,14 +29,13 @@ export default function Tela3() {
   const [load, setLoad] = useState(false);
   const [receita, setReceita] = useState("");
 
-  const [ingr1, setIngr1] = useState("");
-  const [ingr2, setIngr2] = useState("");
-  const [ingr3, setIngr3] = useState("");
-  const [ingr4, setIngr4] = useState("");
-  const [ocasiao, setOcasiao] = useState("");
+  const [genero1, setGenero1] = useState("");
+  const [ambiente1, setAmbiente1] = useState("");
+  const [tema1, setTema1] = useState("");
+  const [emocaoDesejada, setEmocaoDesejada] = useState("");
 
   async function gerarReceita() {
-    if (ingr1 === "" || ingr2 === "" || ingr3 === "" || ingr4 === "" || ocasiao === "") {
+    if (genero1 === "" || ambiente1 === "" || tema1 === "" || emocaoDesejada === "") {
       Alert.alert("Atenção", "Informe todos os ingredientes!", [{ text: "Beleza!" }]);
       return;
     }
@@ -45,13 +44,13 @@ export default function Tela3() {
     Keyboard.dismiss();
 
     const prompt = `
-Sugira um filme ou série baseada em: ${genero1}, ${ambiente1}, ${tema1}, ${emocaoDesejada}.
+    Sugira um filme ou série baseada em: ${genero1}, ${ambiente1}, ${tema1}, ${emocaoDesejada}.
 
-IMPORTANTE:
-- Primeiro escreva o título da recomendação (exemplo: "Suspense na Neve"), depois uma quebra de linha (\n).
-- Em seguida, descreva a sinopse e por que é interessante.
-- No final, se possível, adicione um link do YouTube relacionado (trailer).
-`;
+    IMPORTANTE:
+    - Primeiro escreva o título da recomendação (exemplo: "Suspense na Neve"), depois uma quebra de linha (\n).
+    - Em seguida, descreva a sinopse e por que é interessante.
+    - No final, se possível, adicione um link do YouTube relacionado (trailer).
+    `;
 
     try {
       const chatSession = model.startChat({
@@ -77,50 +76,44 @@ IMPORTANTE:
   return (
     <View style={ESTILOS.container}>
       <StatusBar barStyle="dark-content" translucent={true} backgroundColor="#F1F1F1" />
-      <Text style={ESTILOS.header}>Cozinha fácil</Text>
+      <Text style={ESTILOS.header}>Sujestão de filmes</Text>
       <View style={ESTILOS.form}>
-        <Text style={ESTILOS.label}>Insira os ingredientes abaixo:</Text>
+        <Text style={ESTILOS.label}>Insira os tópicos abaixo:</Text>
         <TextInput
-          placeholder="Ingrediente 1"
+          placeholder="Gênero 1"
           style={ESTILOS.input}
-          value={ingr1}
-          onChangeText={(texto) => setIngr1(texto)}
+          value={genero1}
+          onChangeText={(texto) => setGenero1(texto)}
         />
         <TextInput
-          placeholder="Ingrediente 2"
+          placeholder="Ambiente 1"
           style={ESTILOS.input}
-          value={ingr2}
-          onChangeText={(texto) => setIngr2(texto)}
+          value={ambiente1}
+          onChangeText={(texto) => setAmbiente1(texto)}
         />
         <TextInput
-          placeholder="Ingrediente 3"
+          placeholder="Tema 1 "
           style={ESTILOS.input}
-          value={ingr3}
-          onChangeText={(texto) => setIngr3(texto)}
+          value={tema1}
+          onChangeText={(texto) => setTema1(texto)}
         />
         <TextInput
-          placeholder="Ingrediente 4"
+          placeholder="Emoção Desejada"
           style={ESTILOS.input}
-          value={ingr4}
-          onChangeText={(texto) => setIngr4(texto)}
-        />
-        <TextInput
-          placeholder="Almoço ou Jantar"
-          style={ESTILOS.input}
-          value={ocasiao}
-          onChangeText={(texto) => setOcasiao(texto)}
+          value={emocaoDesejada}
+          onChangeText={(texto) => setEmocaoDesejada(texto)}
         />
       </View>
 
       <TouchableOpacity style={ESTILOS.button} onPress={gerarReceita}>
-        <Text style={ESTILOS.buttonText}>Gerar receita</Text>
+        <Text style={ESTILOS.buttonText}>Gerar filme</Text>
         <MaterialCommunityIcons name="food-variant" size={24} color="#FFF" />
       </TouchableOpacity>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 24, marginTop: 4, }} style={ESTILOS.containerScroll} showsVerticalScrollIndicator={false} >
         {load && (
           <View style={ESTILOS.content}>
-            <Text style={ESTILOS.title}>Produzindo receita...</Text>
+            <Text style={ESTILOS.title}>Buscando um filme...</Text>
             <ActivityIndicator color="#000" size="large" />
           </View>
         )}
